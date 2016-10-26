@@ -1,0 +1,4 @@
+/* variables only works under :root selector */
+:root {
+  --primaryColor: #000;
+}
