@@ -9,7 +9,8 @@ module.exports = {
   devtool: 'eval',
   entry: [
     'react-hot-loader/patch',
-    `${paths.srcDir}/index.dev.js`
+    `${paths.srcDir}/index.js`,
+    `${paths.appDir}/index.dev.js`
   ],
   resolve: {
     extensions: common.resolve.extensions,
@@ -28,7 +29,7 @@ module.exports = {
     preLoaders: [...common.preLoaders],
     loaders: [{
       test: /\.js$/,
-      include: paths.srcDir,
+      include: [paths.appDir, paths.srcDir],
       loader: 'babel',
       query: {
         cacheDirectory: true
@@ -46,8 +47,8 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       inject: true,
-      template: `${paths.srcDir}/index.html`,
-      favicon: `${paths.srcDir}/favicon.ico`
+      template: `${paths.appDir}/index.html`,
+      favicon: `${paths.appDir}/favicon.ico`
     }),
     new webpack.DefinePlugin({ 'process.env.NODE_ENV': '"development"' }),
     new webpack.HotModuleReplacementPlugin()

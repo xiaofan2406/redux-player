@@ -1,17 +1,16 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import createLogger from 'redux-logger';
-import freezeStore from 'redux-immutable-state-invariant';
+import reduxThunk from 'redux-thunk';
 
 import reducers from './reducers';
 
 
 function configureStore(initialState = {}) {
-  const middleware = []; // add redux-thunk or saga here
+  const middleware = [reduxThunk]; // add redux-thunk or saga here
 
   // dev only middlewares
-  if (process.env.NODE_ENV !== 'production') {
-    middleware.push(freezeStore());
-    middleware.push(createLogger());
+  if (process.env.NODE_ENV === 'development') {
+    middleware.push(require('redux-immutable-state-invariant')()); // eslint-disable-line
+    middleware.push(require('redux-logger')()); // eslint-disable-line
   }
 
   const store = createStore(

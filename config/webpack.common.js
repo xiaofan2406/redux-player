@@ -7,13 +7,14 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.json'],
     alias: {
+      app: paths.appDir,
       src: paths.srcDir // this allows import 'src/...' without knowing the relative path
     }
   },
   preLoaders: [
     {
       test: /\.js$/,
-      include: paths.srcDir,
+      include: [paths.srcDir, paths.appDir],
       loader: 'eslint'
     }
   ],

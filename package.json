@@ -1,5 +1,5 @@
 {
-  "name": "react-starter-kit",
+  "name": "redux-player",
   "version": "0.0.5",
   "description": "React starter kit",
   "scripts": {
@@ -14,8 +14,10 @@
     "node": "^6.x",
     "npm": "^3.x"
   },
+  "main": "lib/index.js",
   "keywords": [
     "redux",
+    "redux-player",
     "react",
     "babel",
     "webpack",
@@ -24,19 +26,22 @@
   "author": "Xiaofan Wu",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xiaofan2406/react-starter-kit/tree/redux"
+    "url": "https://github.com/xiaofan2406/redux-player.git"
   },
   "license": "ISC",
-  "dependencies": {
+  "peerDependencies": {
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
+    "antd": "^2.1.0",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
     "babel-loader": "^6.2.5",
+    "babel-plugin-import": "^1.0.1",
     "babel-plugin-transform-class-properties": "^6.16.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-plugin-transform-react-jsx-self": "^6.11.0",

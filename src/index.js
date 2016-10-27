@@ -1,12 +1,4 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import Root from './Root';
+import ReduxPlayer from './ReduxPlayer';
 
 
-const rootElement = document.getElementById('root');
-
-ReactDOM.render(
-  <Root />,
-  rootElement
-);
+export default ReduxPlayer;

@@ -34,7 +34,7 @@ module.exports = {
     "comma-dangle": [2, "never"], // yuk, disallow comma after the last propery of an object
     "new-cap": 0, // disable for HigherOrderComponent wrapping
     "no-console": 0, // still good for debuging
-    "no-underscore-dangle": ["error", { "allowAfterThis": true, "allowAfterSuper": true }], // class helper methods
+    "no-underscore-dangle": 0,
     "no-param-reassign": 0, // e.target.value = ''; happens all the time
     "no-plusplus": 0, // i++ is allowed
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }], // better looking arrow-funcs
