@@ -59,7 +59,7 @@ const play = () => async (dispatch, getState) => {
     const current = getCurrent(state);
     const currentFrame = frames[current];
 
-    dispatch(beginFrame());
+    // dispatch(beginFrame()); // FIXME this doesnt do anything yet
     await currentFrame.action();
 
     if (getIsPlaying(getState())) { // if FINISH was issued during frame playing

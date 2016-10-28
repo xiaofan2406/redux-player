@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { getCurrent, getFrames, getIsPlaying } from 'src/selectors';
+import { Menu, Icon } from 'antd';
+
+import './PlayerList.css';
 
 
 class PlayerList extends React.PureComponent {
@@ -18,14 +20,21 @@ class PlayerList extends React.PureComponent {
     const { frames, current, isPlaying } = this.props;
 
     return (
-      <div>
-        <br />
-        {JSON.stringify(frames, '', 2)}
-        <br />
-        {JSON.stringify(frames[current])}
-        <br />
-        {JSON.stringify(isPlaying)}
-      </div>
+      <Menu
+        selectedKeys={[`${current}`]}
+        mode="vertical"
+        className="PlayerList"
+      >
+        {frames.map((frame, index) => (
+          <Menu.Item
+            key={index}
+            className={`${current === index && isPlaying ? 'active' : ''}`}
+          >
+            {frame.name}
+            {current === index && <Icon type="caret-left" />}
+          </Menu.Item>
+        ))}
+      </Menu>
     );
   }
 }

@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 import { getCurrentFrame } from 'src/selectors';
 
 
-function PlayerDisplay({ current }) {
+function PlayerDisplay({ currentFrame }) {
   return (
     <div>
       <br />
-      {JSON.stringify(current, '', 2)}
+      {JSON.stringify(currentFrame, '', 2)}
     </div>
   );
 }
 
 PlayerDisplay.propTypes = {
-  current: React.PropTypes.object.isRequired
+  currentFrame: React.PropTypes.object
 };
 
 
 const mapStateToProps = state => ({
-  current: getCurrentFrame(state)
+  currentFrame: getCurrentFrame(state)
 });
 
 

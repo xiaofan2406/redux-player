@@ -1,0 +1,20 @@
+.IconButton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #666;
+  margin: 0 8px 12px 0;
+
+  &:hover {
+    color: #2db7f5;
+  }
+
+  &.iconbutton_active {
+    color: #2db7f5;
+  }
+
+  &.iconbutton_disabled {
+    background-color: #f7f7f7; 
+  }
+}

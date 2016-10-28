@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import actions from 'src/actions';
 import { getCurrent, getFrames, getIsLooping, getIsShuffle, getCanPrevious, getCanNext, getIsPlaying } from 'src/selectors';
+import IconButton from 'widgets/IconButton';
 
 
 function delay(ms) {
@@ -47,7 +47,12 @@ class PlayerControl extends React.PureComponent {
 
     return (
       <div>
-        <br />
+        {isPlaying
+          ? <IconButton onClick={pause} size={8} disabled><i className="fa fa-pause-circle" aria-hidden="true" /></IconButton>
+          : <IconButton onClick={play} size={8}><i className="fa fa-play-circle" aria-hidden="true" /></IconButton>
+        }
+        <IconButton onClick={stop} size={4}><i className="fa fa-stop-circle" aria-hidden="true" /></IconButton>
+
         {JSON.stringify(isLooping)}
         <br />
         {isPlaying

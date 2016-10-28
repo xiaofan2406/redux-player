@@ -8,6 +8,7 @@ module.exports = {
     extensions: ['', '.js', '.json'],
     alias: {
       app: paths.appDir,
+      widgets: `${paths.appDir}/widgets`,
       src: paths.srcDir // this allows import 'src/...' without knowing the relative path
     }
   },

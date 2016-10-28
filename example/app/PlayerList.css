@@ -1,0 +1,15 @@
+.PlayerList {
+  height: 100%;
+  
+  & .ant-menu-item {
+    cursor: default;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  & .active {
+    color: #2db7f5!important;
+  }
+}
