@@ -1,19 +1,33 @@
-import * as _selectors from './_selectors';
+const _selectors = require('./_selectors');
 
-export const getFrames = state => _selectors.getFrames(state.reduxPlayer);
-export const getCurrent = state => _selectors.getCurrent(state.reduxPlayer);
-export const getCurrentFrame = state => _selectors.getCurrentFrame(state.reduxPlayer);
+const getFrames = state => _selectors.getFrames(state.reduxPlayer);
 
-export const getIsLooping = state => _selectors.getIsLooping(state.reduxPlayer);
+const getCurrent = state => _selectors.getCurrent(state.reduxPlayer);
 
-export const getIsShuffle = state => _selectors.getIsShuffle(state.reduxPlayer);
+const getCurrentFrame = state => _selectors.getCurrentFrame(state.reduxPlayer);
 
-export const getIsPlaying = state => _selectors.getIsPlaying(state.reduxPlayer);
+const getIsLooping = state => _selectors.getIsLooping(state.reduxPlayer);
 
-export const getHistory = state => _selectors.getHistory(state.reduxPlayer);
+const getIsShuffle = state => _selectors.getIsShuffle(state.reduxPlayer);
 
-export const getIsEnd = state => _selectors.getIsEnd(state.reduxPlayer);
+const getIsPlaying = state => _selectors.getIsPlaying(state.reduxPlayer);
 
-export const getCanNext = state => _selectors.getCanNext(state.reduxPlayer);
+const getHistory = state => _selectors.getHistory(state.reduxPlayer);
 
-export const getCanPrevious = state => _selectors.getCanPrevious(state.reduxPlayer);
+const getIsEnd = state => _selectors.getIsEnd(state.reduxPlayer);
+
+const getCanNext = state => _selectors.getCanNext(state.reduxPlayer);
+
+const getCanPrevious = state => _selectors.getCanPrevious(state.reduxPlayer);
+
+
+exports.getFrames = getFrames;
+exports.getCurrent = getCurrent;
+exports.getCurrentFrame = getCurrentFrame;
+exports.getIsLooping = getIsLooping;
+exports.getIsShuffle = getIsShuffle;
+exports.getIsPlaying = getIsPlaying;
+exports.getHistory = getHistory;
+exports.getIsEnd = getIsEnd;
+exports.getCanNext = getCanNext;
+exports.getCanPrevious = getCanPrevious;

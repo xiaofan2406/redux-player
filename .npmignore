@@ -1,0 +1,5 @@
+example/
+config/
+.babelrc
+.eslintrc.js
+.travis.yml

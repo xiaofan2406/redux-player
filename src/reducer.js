@@ -1,4 +1,4 @@
-import { actionTypes } from './actions';
+const actionTypes = require('./constants');
 
 // Returns a random integer between min (included) and max (excluded)
 function getRandomInt(min, max) {
@@ -17,7 +17,7 @@ const initialState = {
 };
 
 
-export default function (state = initialState, action) {
+module.exports = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_FRAMES:
       return {
@@ -34,17 +34,30 @@ export default function (state = initialState, action) {
         ...state,
         isShuffle: !state.isShuffle
       };
-    case actionTypes.NEXT:
+    case actionTypes.NEXT: {
+      if (state.isShuffle) {
+        return {
+          ...state,
+          current: getRandomInt(0, state.frames.length),
+          history: [...state.history, state.current]
+        };
+      }
       return {
         ...state,
-        current: state.isShuffle ? getRandomInt(0, state.frames.length) : state.current + 1,
-        history: [...state.history, state.current]
+        current: state.current === state.frames.length ? state.current : state.current + 1,
+        history: state.current === state.frames.length
+          ? state.history
+          : [...state.history, state.current]
       };
+    }
+
     case actionTypes.PREVIOUS:
       return {
         ...state,
-        current: state.history[state.history.length - 1],
-        history: [...state.history.slice(0, state.history.length - 1)]
+        current: state.history.length > 0 ? state.history[state.history.length - 1] : state.current,
+        history: state.history.length > 0
+          ? [...state.history.slice(0, state.history.length - 1)]
+          : state.history
       };
     case actionTypes.START:
       return {
@@ -66,4 +79,4 @@ export default function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

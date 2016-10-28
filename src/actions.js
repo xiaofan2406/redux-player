@@ -1,16 +1,8 @@
-import { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd, getIsShuffle } from './selectors';
+const selectors = require('./selectors');
+const actionTypes = require('./constants');
 
-export const actionTypes = {
-  SET_FRAMES: 'SET_FRAMES',
-  TOGGLE_SHUFFLE: 'TOGGLE_SHUFFLE',
-  TOGGLE_LOOP: 'TOGGLE_LOOP',
-  START: 'START',
-  PAUSE: 'PAUSE',
-  RESET: 'RESET',
-  NEXT: 'NEXT',
-  PREVIOUS: 'PREVIOUS'
-};
 
+const { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd, getIsShuffle } = selectors;
 
 const setFrames = frames => ({
   type: actionTypes.SET_FRAMES,
@@ -62,11 +54,11 @@ const play = () => async (dispatch, getState) => {
     await currentFrame.action();
     // finish playing frame
 
-    const newState = getState();
-
-    if (getIsPlaying(newState)) {
+    if (getIsPlaying(getState())) {
       dispatch(next());
     }
+
+    const newState = getState();
 
     if (getIsEnd(newState)) {
       if (getIsLooping(newState) && !getIsShuffle(newState)) {
@@ -83,15 +75,14 @@ const stop = () => (dispatch) => {
   dispatch(reset());
 };
 
-export default {
-  setFrames,
-  toggleShuffle,
-  toggleLoop,
-  next,
-  previous,
-  start,
-  pause,
-  reset,
-  play,
-  stop
-};
+
+exports.setFrames = setFrames;
+exports.toggleShuffle = toggleShuffle;
+exports.toggleLoop = toggleLoop;
+exports.next = next;
+exports.previous = previous;
+exports.start = start;
+exports.pause = pause;
+exports.reset = reset;
+exports.play = play;
+exports.stop = stop;

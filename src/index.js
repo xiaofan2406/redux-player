@@ -1,4 +1,7 @@
-import reducer from './reducers';
+const actions = require('./actions');
+const reducer = require('./reducer');
+const selectors = require('./selectors');
 
-
-export default reducer;
+exports.actions = actions;
+exports.reducer = reducer;
+exports.selectors = selectors;

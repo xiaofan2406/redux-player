@@ -18,8 +18,8 @@ class ReduxPlayer extends React.PureComponent {
     current: React.PropTypes.number.isRequired,
     isShuffle: React.PropTypes.bool.isRequired,
     isLooping: React.PropTypes.bool.isRequired,
-    canNext: React.PropTypes.bool.isRequired,
-    canPrevious: React.PropTypes.bool.isRequired,
+    // canNext: React.PropTypes.bool.isRequired,
+    // canPrevious: React.PropTypes.bool.isRequired,
     isPlaying: React.PropTypes.bool.isRequired,
     setFrames: React.PropTypes.func.isRequired,
     toggleLoop: React.PropTypes.func.isRequired,
@@ -69,7 +69,7 @@ class ReduxPlayer extends React.PureComponent {
 
   render() {
     const {
-      frames, current, canNext, canPrevious, isPlaying, isShuffle, isLooping,
+      frames, current, isPlaying, isShuffle, isLooping,
       next, previous, pause, stop, toggleLoop, toggleShuffle, play
     } = this.props;
 
@@ -87,8 +87,8 @@ class ReduxPlayer extends React.PureComponent {
           : <button onClick={play}>play</button>
         }
         {isPlaying && <button onClick={stop}>stop</button> }
-        <button onClick={next} disabled={!canNext}>next</button>
-        <button onClick={previous} disabled={!canPrevious}>previous</button>
+        <button onClick={next}>next</button>
+        <button onClick={previous}>previous</button>
         <br />
         <button onClick={toggleLoop}>toggleLoop</button>
         <button onClick={toggleShuffle}>{isShuffle ? 'shuffled' : 'ordered'}</button>
