@@ -1,19 +1,14 @@
-import { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd } from './selectors';
+import { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd, getIsShuffle } from './selectors';
 
 export const actionTypes = {
   SET_FRAMES: 'SET_FRAMES',
   TOGGLE_SHUFFLE: 'TOGGLE_SHUFFLE',
   TOGGLE_LOOP: 'TOGGLE_LOOP',
-  SHUFFLE_ON: 'SHUFFLE_ON',
-  SHUFFLE_OFF: 'SHUFFLE_OFF',
-  LOOP_ON: 'LOOP_ON',
-  LOOP_OFF: 'LOOP_OFF',
   START: 'START',
   PAUSE: 'PAUSE',
-  FINISH: 'FINISH',
+  RESET: 'RESET',
   NEXT: 'NEXT',
-  PREVIOUS: 'PREVIOUS',
-  RESET: 'RESET'
+  PREVIOUS: 'PREVIOUS'
 };
 
 
@@ -28,22 +23,6 @@ const toggleShuffle = () => ({
 
 const toggleLoop = () => ({
   type: actionTypes.TOGGLE_LOOP
-});
-
-const shuffleOn = () => ({
-  type: actionTypes.SHUFFLE_ON
-});
-
-const shuffleOff = () => ({
-  type: actionTypes.SHUFFLE_OFF
-});
-
-const loopOn = () => ({
-  type: actionTypes.LOOP_ON
-});
-
-const loopOff = () => ({
-  type: actionTypes.LOOP_OFF
 });
 
 const next = () => ({
@@ -62,15 +41,15 @@ const pause = () => ({
   type: actionTypes.PAUSE
 });
 
-const finish = () => ({
-  type: actionTypes.FINISH
-});
-
 const reset = () => ({
   type: actionTypes.RESET
 });
 
 const play = () => async (dispatch, getState) => {
+  // start playing list
+  if (getIsEnd(getState())) { // restart if list is exhausted
+    dispatch(reset());
+  }
   dispatch(start());
 
   while (getIsPlaying(getState())) {
@@ -78,32 +57,41 @@ const play = () => async (dispatch, getState) => {
     const frames = getFrames(state);
     const current = getCurrent(state);
     const currentFrame = frames[current];
+
+    // start playing frame
     await currentFrame.action();
-    dispatch(next());
-    if (getIsEnd(getState())) {
-      if (getIsLooping(getState())) {
+    // finish playing frame
+
+    const newState = getState();
+
+    if (getIsPlaying(newState)) {
+      dispatch(next());
+    }
+
+    if (getIsEnd(newState)) {
+      if (getIsLooping(newState) && !getIsShuffle(newState)) {
         dispatch(reset());
       } else {
-        dispatch(finish());
+        dispatch(pause());
       }
     }
   }
 };
 
+const stop = () => (dispatch) => {
+  dispatch(pause());
+  dispatch(reset());
+};
 
 export default {
   setFrames,
   toggleShuffle,
   toggleLoop,
-  shuffleOn,
-  shuffleOff,
-  loopOn,
-  loopOff,
   next,
   previous,
   start,
   pause,
-  finish,
   reset,
-  play
+  play,
+  stop
 };

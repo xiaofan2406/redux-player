@@ -1,12 +1,3 @@
-function fromRange(range) {
-  const arr = [];
-  for (let i = 0; i < range; i++) {
-    arr.push(i);
-  }
-  return arr;
-}
-
-
 export const getFrames = state => state.frames;
 
 export const getCurrent = state => state.current;
@@ -24,10 +15,7 @@ export const getHistory = state => state.history;
 export const getIsEnd = (state) => {
   const framesLength = getFrames(state).length;
   if (getIsShuffle(state)) {
-    const history = getHistory(state);
-    const framesLengthArr = fromRange(framesLength);
-
-    return framesLengthArr.every(item => history.indexOf(item) > -1);
+    return !getIsLooping(state);
   }
   return getCurrent(state) > framesLength - 1;
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import actions from './actions';
-import { getCurrent, getFrames, getIsLooping, getIsShuffle, getCanPrevious, getCanNext, getIsPlaying } from './selectors';
+import actions from 'src/actions';
+import { getCurrent, getFrames, getIsLooping, getIsShuffle, getCanPrevious, getCanNext, getIsPlaying } from 'src/selectors';
 
 
 function delay(ms) {
@@ -26,10 +26,8 @@ class ReduxPlayer extends React.PureComponent {
     toggleShuffle: React.PropTypes.func.isRequired,
     next: React.PropTypes.func.isRequired,
     previous: React.PropTypes.func.isRequired,
-    // start: React.PropTypes.func.isRequired,
     pause: React.PropTypes.func.isRequired,
-    finish: React.PropTypes.func.isRequired,
-    // reset: React.PropTypes.func.isRequired,
+    stop: React.PropTypes.func.isRequired,
     play: React.PropTypes.func.isRequired
   };
 
@@ -42,16 +40,16 @@ class ReduxPlayer extends React.PureComponent {
   componentDidMount() {
     const { setFrames } = this.props;
     setFrames([
-      { action: () => delay(1000).then(console.log(0)), duration: 1000 },
-      { action: () => delay(2000).then(console.log(1)), duration: 2000 },
-      { action: () => delay(3000).then(console.log(2)), duration: 3000 },
-      { action: () => delay(4000).then(console.log(3)), duration: 4000 },
-      { action: () => delay(5000).then(console.log(4)), duration: 5000 }
+      { action: () => delay(1000).then(console.log(0)), name: 'Frame number 0' },
+      { action: () => delay(1000).then(console.log(1)), name: 'Frame number 1' },
+      { action: () => delay(1000).then(console.log(2)), name: 'Frame number 2' },
+      { action: () => delay(1000).then(console.log(3)), name: 'Frame number 3' },
+      { action: () => delay(1000).then(console.log(4)), name: 'Frame number 4' }
     ]);
   }
 
   // async play() {
-  //   const { start, next, finish, reset } = this.props;
+  //   const { start, next, finish, stop } = this.props;
   //
   //   start();
   //   do {
@@ -61,7 +59,7 @@ class ReduxPlayer extends React.PureComponent {
   //     next();
   //     if (this.props.current === this.props.frames.length - 1) {
   //       if (this.props.isLooping) {
-  //         reset();
+  //         stop();
   //       } else {
   //         finish();
   //       }
@@ -72,7 +70,7 @@ class ReduxPlayer extends React.PureComponent {
   render() {
     const {
       frames, current, canNext, canPrevious, isPlaying, isShuffle, isLooping,
-      next, previous, pause, finish, toggleLoop, toggleShuffle, play
+      next, previous, pause, stop, toggleLoop, toggleShuffle, play
     } = this.props;
 
     return (
@@ -88,7 +86,7 @@ class ReduxPlayer extends React.PureComponent {
           ? <button onClick={pause}>pause</button>
           : <button onClick={play}>play</button>
         }
-        {isPlaying && <button onClick={finish}>finish</button> }
+        {isPlaying && <button onClick={stop}>stop</button> }
         <button onClick={next} disabled={!canNext}>next</button>
         <button onClick={previous} disabled={!canPrevious}>previous</button>
         <br />
@@ -119,7 +117,6 @@ export default connect(mapStateToProps, {
   previous: actions.previous,
   start: actions.start,
   pause: actions.pause,
-  finish: actions.finish,
-  reset: actions.reset,
+  stop: actions.stop,
   play: actions.play
 })(ReduxPlayer);

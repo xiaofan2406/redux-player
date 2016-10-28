@@ -1,4 +1,4 @@
-import ReduxPlayer from './ReduxPlayer';
+import reducer from './reducers';
 
 
-export default ReduxPlayer;
+export default reducer;

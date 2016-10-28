@@ -1,15 +1,6 @@
 import { actionTypes } from './actions';
-import { getIsEnd } from './_selectors';
-
-// function shuffleArray(array) {
-//   for (let i = array.length; i; i--) {
-//     const j = Math.floor(Math.random() * i);
-//     [array[i - 1], array[j]] = [array[j], array[i - 1]];
-//   }
-// }
 
 // Returns a random integer between min (included) and max (excluded)
-// Using Math.round() will give you a non-uniform distribution!
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -43,30 +34,6 @@ export default function (state = initialState, action) {
         ...state,
         isShuffle: !state.isShuffle
       };
-    case actionTypes.START: {
-      if (getIsEnd(state)) {
-        return {
-          ...state,
-          history: [],
-          current: 0,
-          isPlaying: true
-        };
-      }
-      return {
-        ...state,
-        isPlaying: true
-      };
-    }
-    case actionTypes.PAUSE:
-      return {
-        ...state,
-        isPlaying: false
-      };
-    case actionTypes.FINISH:
-      return {
-        ...state,
-        isPlaying: false
-      };
     case actionTypes.NEXT:
       return {
         ...state,
@@ -79,11 +46,23 @@ export default function (state = initialState, action) {
         current: state.history[state.history.length - 1],
         history: [...state.history.slice(0, state.history.length - 1)]
       };
+    case actionTypes.START:
+      return {
+        ...state,
+        isPlaying: true
+      };
+    case actionTypes.PAUSE:
+      return {
+        ...state,
+        isPlaying: false
+      };
     case actionTypes.RESET:
       return {
         ...state,
-        current: 0
+        current: 0,
+        history: []
       };
+
     default:
       return state;
   }

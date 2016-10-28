@@ -1,5 +1,5 @@
 import React from 'react';
-import ReduxPlayer from 'src';
+import ReduxPlayer from './ReduxPlayer';
 
 
 /* Use functions rather than constant elements for better debugging */
