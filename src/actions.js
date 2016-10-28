@@ -1,4 +1,4 @@
-import { getFrames, getCurrent, getIsLooping, getIsPlaying } from './selectors';
+import { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd } from './selectors';
 
 export const actionTypes = {
   SET_FRAMES: 'SET_FRAMES',
@@ -73,21 +73,21 @@ const reset = () => ({
 const play = () => async (dispatch, getState) => {
   dispatch(start());
 
-  do {
+  while (getIsPlaying(getState())) {
     const state = getState();
     const frames = getFrames(state);
     const current = getCurrent(state);
     const currentFrame = frames[current];
     await currentFrame.action();
     dispatch(next());
-    if (current === frames.length - 1) {
-      if (getIsLooping(state)) {
+    if (getIsEnd(getState())) {
+      if (getIsLooping(getState())) {
         dispatch(reset());
       } else {
         dispatch(finish());
       }
     }
-  } while (getIsPlaying(getState()));
+  }
 };
 
 
