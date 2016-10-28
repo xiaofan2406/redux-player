@@ -11,11 +11,8 @@ function delay(ms) {
   });
 }
 
-class ReduxPlayer extends React.PureComponent {
+class PlayerControl extends React.PureComponent {
   static propTypes = {
-    // { action, duration }
-    frames: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-    current: React.PropTypes.number.isRequired,
     isShuffle: React.PropTypes.bool.isRequired,
     isLooping: React.PropTypes.bool.isRequired,
     // canNext: React.PropTypes.bool.isRequired,
@@ -31,12 +28,6 @@ class ReduxPlayer extends React.PureComponent {
     play: React.PropTypes.func.isRequired
   };
 
-  // constructor(props) {
-  //   super(props);
-  //
-  //   this.play = this.play.bind(this);
-  // }
-
   componentDidMount() {
     const { setFrames } = this.props;
     setFrames([
@@ -48,37 +39,14 @@ class ReduxPlayer extends React.PureComponent {
     ]);
   }
 
-  // async play() {
-  //   const { start, next, finish, stop } = this.props;
-  //
-  //   start();
-  //   do {
-  //     console.log(this.props.frames);
-  //     const currentFrame = this.props.frames[this.props.current];
-  //     await currentFrame.action();
-  //     next();
-  //     if (this.props.current === this.props.frames.length - 1) {
-  //       if (this.props.isLooping) {
-  //         stop();
-  //       } else {
-  //         finish();
-  //       }
-  //     }
-  //   } while (this.props.isPlaying);
-  // }
-
   render() {
     const {
-      frames, current, isPlaying, isShuffle, isLooping,
+      isPlaying, isShuffle, isLooping,
       next, previous, pause, stop, toggleLoop, toggleShuffle, play
     } = this.props;
 
     return (
       <div>
-        <br />
-        {JSON.stringify(frames, '', 2)}
-        <br />
-        {JSON.stringify(frames[current])}
         <br />
         {JSON.stringify(isLooping)}
         <br />
@@ -119,4 +87,4 @@ export default connect(mapStateToProps, {
   pause: actions.pause,
   stop: actions.stop,
   play: actions.play
-})(ReduxPlayer);
+})(PlayerControl);

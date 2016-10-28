@@ -1,11 +1,21 @@
 import React from 'react';
-import ReduxPlayer from './ReduxPlayer';
 
+import Player from './Player';
 
 /* Use functions rather than constant elements for better debugging */
 function App() {
   return (
-    <ReduxPlayer />
+    <div className="App">
+      <div className="App-header">
+        header
+      </div>
+      <div className="App-main">
+        <Player />
+      </div>
+      <div className="App-footer">
+        footer
+      </div>
+    </div>
   );
 }
 
