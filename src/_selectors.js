@@ -13,11 +13,12 @@ const getIsPlaying = state => state.isPlaying;
 const getHistory = state => state.history;
 
 const getIsEnd = (state) => {
-  const framesLength = getFrames(state).length;
   if (getIsShuffle(state)) {
-    return !getIsLooping(state);
+    return false;
   }
-  return getCurrent(state) > framesLength - 1;
+
+  const history = getHistory(state);
+  return history[history.length - 1] >= getFrames(state).length - 1;
 };
 
 const getCanNext = state =>

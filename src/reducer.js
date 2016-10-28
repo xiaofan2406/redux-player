@@ -34,23 +34,27 @@ module.exports = (state = initialState, action) => {
         ...state,
         isShuffle: !state.isShuffle
       };
-    case actionTypes.NEXT: {
-      if (state.isShuffle) {
-        return {
-          ...state,
-          current: getRandomInt(0, state.frames.length),
-          history: [...state.history, state.current]
-        };
-      }
+    case actionTypes.BEGIN_FRAME:
+      return state;
+    case actionTypes.END_FRAME:
       return {
         ...state,
-        current: state.current === state.frames.length ? state.current : state.current + 1,
-        history: state.current === state.frames.length
-          ? state.history
-          : [...state.history, state.current]
+        history: [...state.history, state.current]
+      };
+    case actionTypes.NEXT: {
+      let current = state.current;
+
+      if (state.isShuffle) {
+        current = getRandomInt(0, state.frames.length);
+      } else {
+        current = state.current === state.frames.length - 1 ? state.current : state.current + 1;
+      }
+
+      return {
+        ...state,
+        current
       };
     }
-
     case actionTypes.PREVIOUS:
       return {
         ...state,

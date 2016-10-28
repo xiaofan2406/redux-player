@@ -2,7 +2,8 @@ const selectors = require('./selectors');
 const actionTypes = require('./constants');
 
 
-const { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd, getIsShuffle } = selectors;
+const { getFrames, getCurrent, getIsLooping, getIsPlaying, getIsEnd, getIsShuffle }
+  = selectors;
 
 const setFrames = frames => ({
   type: actionTypes.SET_FRAMES,
@@ -15,6 +16,14 @@ const toggleShuffle = () => ({
 
 const toggleLoop = () => ({
   type: actionTypes.TOGGLE_LOOP
+});
+
+const beginFrame = () => ({
+  type: actionTypes.BEGIN_FRAME
+});
+
+const endFrame = () => ({
+  type: actionTypes.END_FRAME
 });
 
 const next = () => ({
@@ -50,11 +59,11 @@ const play = () => async (dispatch, getState) => {
     const current = getCurrent(state);
     const currentFrame = frames[current];
 
-    // start playing frame
+    dispatch(beginFrame());
     await currentFrame.action();
-    // finish playing frame
 
-    if (getIsPlaying(getState())) {
+    if (getIsPlaying(getState())) { // if FINISH was issued during frame playing
+      dispatch(endFrame());
       dispatch(next());
     }
 
@@ -79,6 +88,8 @@ const stop = () => (dispatch) => {
 exports.setFrames = setFrames;
 exports.toggleShuffle = toggleShuffle;
 exports.toggleLoop = toggleLoop;
+exports.beginFrame = beginFrame;
+exports.endFrame = endFrame;
 exports.next = next;
 exports.previous = previous;
 exports.start = start;

@@ -40,11 +40,11 @@ class ReduxPlayer extends React.PureComponent {
   componentDidMount() {
     const { setFrames } = this.props;
     setFrames([
-      { action: () => delay(1000).then(console.log(0)), name: 'Frame number 0' },
-      { action: () => delay(1000).then(console.log(1)), name: 'Frame number 1' },
-      { action: () => delay(1000).then(console.log(2)), name: 'Frame number 2' },
-      { action: () => delay(1000).then(console.log(3)), name: 'Frame number 3' },
-      { action: () => delay(1000).then(console.log(4)), name: 'Frame number 4' }
+      { action: () => delay(1000).then(console.log('playing 0...')), name: 'Frame number 0' },
+      { action: () => delay(1000).then(console.log('playing 1...')), name: 'Frame number 1' },
+      { action: () => delay(1000).then(console.log('playing 2...')), name: 'Frame number 2' },
+      { action: () => delay(1000).then(console.log('playing 3...')), name: 'Frame number 3' },
+      { action: () => delay(1000).then(console.log('playing 4...')), name: 'Frame number 4' }
     ]);
   }
 
