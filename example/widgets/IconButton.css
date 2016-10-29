@@ -5,6 +5,10 @@
   cursor: pointer;
   color: #666;
   margin: 0 8px 12px 0;
+  appearance: none;
+  border:none;
+  background-color: transparent;
+  outline: none;
 
   &:hover {
     color: #2db7f5;
@@ -15,6 +19,7 @@
   }
 
   &.iconbutton_disabled {
-    background-color: #f7f7f7; 
+    color: #999;
+    cursor: not-allowed;
   }
 }

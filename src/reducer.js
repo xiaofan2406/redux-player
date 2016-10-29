@@ -55,14 +55,20 @@ module.exports = (state = initialState, action) => {
         current
       };
     }
-    case actionTypes.PREVIOUS:
+    case actionTypes.PREVIOUS: {
+      let previous;
+      if (state.isShuffle) {
+        // FIXME need a previous count, or slice history
+        previous = state.history[state.history.length - 1];
+      } else {
+        previous = state.current === 0 ? state.current : state.current - 1;
+      }
       return {
         ...state,
-        current: state.history.length > 0 ? state.history[state.history.length - 1] : state.current,
-        history: state.history.length > 0
-          ? [...state.history.slice(0, state.history.length - 1)]
-          : state.history
+        current: previous
       };
+    }
+
     case actionTypes.START:
       return {
         ...state,

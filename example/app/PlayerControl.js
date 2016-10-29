@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import actions from 'src/actions';
-import { getCurrent, getFrames, getIsLooping, getIsShuffle, getCanPrevious, getCanNext, getIsPlaying } from 'src/selectors';
+import { getIsLooping, getIsShuffle, getCanPrevious, getCanNext, getIsPlaying } from 'src/selectors';
 import IconButton from 'widgets/IconButton';
-
 
 function delay(ms) {
   return new Promise((resolve) => {
@@ -15,8 +14,8 @@ class PlayerControl extends React.PureComponent {
   static propTypes = {
     isShuffle: React.PropTypes.bool.isRequired,
     isLooping: React.PropTypes.bool.isRequired,
-    // canNext: React.PropTypes.bool.isRequired,
-    // canPrevious: React.PropTypes.bool.isRequired,
+    canNext: React.PropTypes.bool.isRequired,
+    canPrevious: React.PropTypes.bool.isRequired,
     isPlaying: React.PropTypes.bool.isRequired,
     setFrames: React.PropTypes.func.isRequired,
     toggleLoop: React.PropTypes.func.isRequired,
@@ -31,40 +30,32 @@ class PlayerControl extends React.PureComponent {
   componentDidMount() {
     const { setFrames } = this.props;
     setFrames([
-      { action: () => delay(1000).then(console.log('playing 0...')), name: 'Frame number 0' },
-      { action: () => delay(1000).then(console.log('playing 1...')), name: 'Frame number 1' },
-      { action: () => delay(1000).then(console.log('playing 2...')), name: 'Frame number 2' },
-      { action: () => delay(1000).then(console.log('playing 3...')), name: 'Frame number 3' },
-      { action: () => delay(1000).then(console.log('playing 4...')), name: 'Frame number 4' }
+      { action: () => delay(1000).then(console.log('playing 0...')), name: 'Frame number 0', duration: 1000 },
+      { action: () => delay(1000).then(console.log('playing 1...')), name: 'Frame number 1', duration: 1000 },
+      { action: () => delay(1000).then(console.log('playing 2...')), name: 'Frame number 2', duration: 1000 },
+      { action: () => delay(1000).then(console.log('playing 3...')), name: 'Frame number 3', duration: 1000 },
+      { action: () => delay(1000).then(console.log('playing 4...')), name: 'Frame number 4', duration: 1000 }
     ]);
   }
 
   render() {
     const {
-      isPlaying, isShuffle, isLooping,
+      isPlaying, isShuffle, isLooping, canPrevious, canNext,
       next, previous, pause, stop, toggleLoop, toggleShuffle, play
     } = this.props;
 
     return (
       <div>
+        <IconButton title="Previous" onClick={previous} disabled={!canPrevious}><i className="fa fa-step-backward" aria-hidden="true" /></IconButton>
+
         {isPlaying
-          ? <IconButton onClick={pause} size={8} disabled><i className="fa fa-pause-circle" aria-hidden="true" /></IconButton>
+          ? <IconButton onClick={pause} size={8}><i className="fa fa-pause-circle" aria-hidden="true" /></IconButton>
           : <IconButton onClick={play} size={8}><i className="fa fa-play-circle" aria-hidden="true" /></IconButton>
         }
-        <IconButton onClick={stop} size={4}><i className="fa fa-stop-circle" aria-hidden="true" /></IconButton>
-
-        {JSON.stringify(isLooping)}
-        <br />
-        {isPlaying
-          ? <button onClick={pause}>pause</button>
-          : <button onClick={play}>play</button>
-        }
-        {isPlaying && <button onClick={stop}>stop</button> }
-        <button onClick={next}>next</button>
-        <button onClick={previous}>previous</button>
-        <br />
-        <button onClick={toggleLoop}>toggleLoop</button>
-        <button onClick={toggleShuffle}>{isShuffle ? 'shuffled' : 'ordered'}</button>
+        <IconButton onClick={stop}><i className="fa fa-stop-circle" aria-hidden="true" /></IconButton>
+        <IconButton title="Next" onClick={next} disabled={!canNext}><i className="fa fa-step-forward" aria-hidden="true" /></IconButton>
+        <IconButton title="Shuffle" onClick={toggleShuffle} active={isShuffle}><i className="fa fa-random" aria-hidden="true" /></IconButton>
+        <IconButton title="Loop" onClick={toggleLoop} active={isLooping}><i className="fa fa-refresh" aria-hidden="true" /></IconButton>
       </div>
     );
   }
@@ -72,8 +63,6 @@ class PlayerControl extends React.PureComponent {
 
 
 const mapStateToProps = state => ({
-  frames: getFrames(state),
-  current: getCurrent(state),
   isLooping: getIsLooping(state),
   isShuffle: getIsShuffle(state),
   canNext: getCanNext(state),

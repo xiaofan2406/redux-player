@@ -21,11 +21,28 @@ const getIsEnd = (state) => {
   return history[history.length - 1] >= getFrames(state).length - 1;
 };
 
-const getCanNext = state =>
-  !getIsPlaying(state) && (getIsShuffle(state) || state.current < state.frames.length);
+const getCanNext = (state) => {
+  if (getIsPlaying(state)) {
+    return false;
+  }
+  if (getIsShuffle(state)) {
+    return true;
+  }
+  return getCurrent(state) < getFrames(state).length - 1;
+};
 
-const getCanPrevious = state =>
-  !getIsPlaying(state) && getHistory(state).length > 0;
+const getCanPrevious = (state) => {
+  if (getIsPlaying(state)) {
+    return false;
+  }
+  if (getIsShuffle(state)) {
+    return getHistory(state).length > 0;
+  }
+  return getCurrent(state) > 0;
+};
+
+// const getCanPrevious = state =>
+//   !getIsPlaying(state) && getHistory(state).length > 0;
 
 
 exports.getFrames = getFrames;
