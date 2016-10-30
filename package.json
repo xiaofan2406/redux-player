@@ -4,11 +4,9 @@
   "description": "React starter kit",
   "scripts": {
     "dev": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config ./config/webpack.dev.js",
-    "prebuild": "rm -r -f ./build",
-    "build": "NODE_ENV=production ./node_modules/.bin/webpack --config ./config/webpack.prod.js",
     "lint": "./node_modules/.bin/eslint -c .eslintrc.js ./src",
-    "preversion": "npm run lint && npm run build",
-    "postversion": "git push"
+    "preversion": "npm run lint",
+    "postversion": "git push && git push --tags"
   },
   "engines": {
     "node": "^6.x",
