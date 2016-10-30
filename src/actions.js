@@ -18,10 +18,6 @@ const toggleLoop = () => ({
   type: actionTypes.TOGGLE_LOOP
 });
 
-const beginFrame = () => ({
-  type: actionTypes.BEGIN_FRAME
-});
-
 const endFrame = () => ({
   type: actionTypes.END_FRAME
 });
@@ -59,7 +55,6 @@ const play = () => async (dispatch, getState) => {
     const current = getCurrent(state);
     const currentFrame = frames[current];
 
-    // dispatch(beginFrame()); // FIXME this doesnt do anything yet
     await currentFrame.action();
 
     if (getIsPlaying(getState())) { // if FINISH was issued during frame playing
@@ -88,7 +83,6 @@ const stop = () => (dispatch) => {
 exports.setFrames = setFrames;
 exports.toggleShuffle = toggleShuffle;
 exports.toggleLoop = toggleLoop;
-exports.beginFrame = beginFrame;
 exports.endFrame = endFrame;
 exports.next = next;
 exports.previous = previous;

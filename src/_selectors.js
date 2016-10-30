@@ -41,9 +41,6 @@ const getCanPrevious = (state) => {
   return getCurrent(state) > 0;
 };
 
-// const getCanPrevious = state =>
-//   !getIsPlaying(state) && getHistory(state).length > 0;
-
 
 exports.getFrames = getFrames;
 exports.getCurrent = getCurrent;

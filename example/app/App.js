@@ -8,15 +8,11 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <div className="App-header">
-        header
-      </div>
+      <div className="App-header" />
       <div className="App-main">
         <Player />
       </div>
-      <div className="App-footer">
-        footer
-      </div>
+      <div className="App-footer" />
     </div>
   );
 }

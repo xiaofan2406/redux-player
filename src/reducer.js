@@ -34,8 +34,6 @@ module.exports = (state = initialState, action) => {
         ...state,
         isShuffle: !state.isShuffle
       };
-    case actionTypes.BEGIN_FRAME:
-      return state;
     case actionTypes.END_FRAME:
       return {
         ...state,
@@ -58,17 +56,16 @@ module.exports = (state = initialState, action) => {
     case actionTypes.PREVIOUS: {
       let previous;
       if (state.isShuffle) {
-        // FIXME need a previous count, or slice history
         previous = state.history[state.history.length - 1];
       } else {
         previous = state.current === 0 ? state.current : state.current - 1;
       }
       return {
         ...state,
-        current: previous
+        current: previous,
+        history: state.history.slice(0, state.history.length - 1)
       };
     }
-
     case actionTypes.START:
       return {
         ...state,
