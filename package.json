@@ -12,7 +12,7 @@
     "node": "^6.x",
     "npm": "^3.x"
   },
-  "main": "src/index.js",
+  "main": "src/",
   "keywords": [
     "redux",
     "redux-player",
