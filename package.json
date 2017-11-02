@@ -1,80 +1,130 @@
 {
   "name": "redux-player",
-  "version": "0.0.3",
-  "description": "Redux player",
-  "scripts": {
-    "dev": "NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config ./config/webpack.dev.js",
-    "lint": "./node_modules/.bin/eslint -c .eslintrc.js ./src",
-    "preversion": "npm run lint",
-    "postversion": "git push && git push --tags"
+  "version": "0.0.13",
+  "author": "Xiaofan Wu (https://github.com/xiaofan2406)",
+  "description": "",
+  "keywords": ["react", "redux", "redux-player"],
+  "repository": "xiaofan2406/redux-player",
+  "bugs": {
+    "url": "https://github.com/xiaofan2406/redux-player/issues"
   },
+  "license": "MIT",
   "engines": {
-    "node": "^6.x",
-    "npm": "^3.x"
+    "node": ">=8"
   },
-  "main": "src/",
-  "keywords": [
-    "redux",
-    "redux-player",
-    "react",
-    "babel",
-    "webpack",
-    "eslint"
-  ],
-  "author": "Xiaofan Wu",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xiaofan2406/redux-player.git"
+  "main": "lib/index.js",
+  "scripts": {
+    "precommit": "lint-staged",
+    "lint:eslint": "eslint -c .eslintrc.js src",
+    "lint:prettier": "prettier-check src/**/*.js",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "prebuild": "npm run lint && rm -rf ./lib",
+    "build": "NODE_ENV=production babel src --out-dir lib",
+    "test": "NODE_ENV=test jest --watch --env=jsdom",
+    "coverage": "NODE_ENV=test jest --env=jsdom --coverage",
+    "prepublishOnly": "NODE_ENV=production npm run build",
+    "postpublish": "git push && git push --tags",
+    "dev":
+      "NODE_ENV=development webpack-dev-server --config ./docs/config/webpack.dev.js",
+    "predocs":
+      "rm -rf ./docs/dist && NODE_ENV=production webpack --config ./docs/config/webpack.prod.js",
+    "docs": "surge -p ./docs/dist -d redux-player.surge.sh"
   },
-  "license": "ISC",
+  "lint-staged": {
+    "*.{js,json}": ["./node_modules/.bin/prettier --write", "git add"]
+  },
+  "prettier": {
+    "singleQuote": true
+  },
+  "jest": {
+    "collectCoverageFrom": ["src/**/*.js"],
+    "setupFiles": [
+      "<rootDir>/config/jest-polyfill.js",
+      "<rootDir>/config/enzymeAdapter.js"
+    ],
+    "testMatch": ["<rootDir>/test/**/*.js"],
+    "testEnvironment": "node",
+    "testURL": "http://localhost",
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    },
+    "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+    "moduleFileExtensions": ["js", "json"],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "coveragePathIgnorePatterns": ["<rootDir>/src/index.js"]
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0"
+  },
   "peerDependencies": {
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-redux": "^4.4.5",
-    "redux": "^3.6.0",
-    "redux-thunk": "^2.1.0"
+    "react": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
-    "antd": "^2.1.0",
-    "babel-core": "^6.18.0",
-    "babel-eslint": "^7.1.0",
-    "babel-loader": "^6.2.7",
-    "babel-plugin-import": "^1.0.1",
-    "babel-plugin-transform-class-properties": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-plugin-transform-react-jsx-self": "^6.11.0",
-    "babel-plugin-transform-react-jsx-source": "^6.9.0",
-    "babel-plugin-transform-react-remove-prop-types": "^0.2.10",
-    "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "^6.16.0",
-    "babel-preset-react": "^6.16.0",
-    "classnames": "^2.2.5",
-    "css-loader": "^0.25.0",
-    "eslint": "^3.8.1",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-import-resolver-webpack": "^0.6.0",
-    "eslint-loader": "^1.6.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.3",
-    "eslint-plugin-react": "^6.4.1",
-    "extract-text-webpack-plugin": "^1.0.1",
-    "file-loader": "^0.9.0",
-    "html-webpack-plugin": "^2.24.0",
-    "json-loader": "^0.5.4",
-    "postcss-cssnext": "^2.8.0",
-    "postcss-import": "^8.1.2",
-    "postcss-loader": "^1.0.0",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-hot-loader": "^3.0.0-beta.6",
-    "react-redux": "^4.4.5",
-    "redux": "^3.6.0",
-    "redux-immutable-state-invariant": "^1.2.3",
-    "redux-logger": "^2.6.1",
-    "redux-thunk": "^2.1.0",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-react-jsx-self": "^6.22.0",
+    "babel-plugin-transform-react-jsx-source": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.7",
+    "emotion": "^8.0.9",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.3",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.7.0",
+    "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.5",
+    "filemanager-webpack-plugin": "^1.0.11",
+    "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
+    "jest": "^21.2.1",
+    "lint-staged": "^4.3.0",
+    "object-assign": "^4.1.1",
+    "prettier": "^1.7.2",
+    "prettier-check": "^2.0.0",
+    "promise": "^8.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-emotion": "^8.0.9",
+    "react-hot-loader": "^3.1.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-test-renderer": "^16.0.0",
+    "redux": "^3.7.2",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "serve": "^6.4.0",
+    "style-loader": "^0.19.0",
+    "surge": "^0.19.0",
+    "uglifyjs-webpack-plugin": "^1.0.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3",
+    "webpack-manifest-plugin": "^1.3.2",
+    "whatwg-fetch": "^2.0.3"
   }
 }

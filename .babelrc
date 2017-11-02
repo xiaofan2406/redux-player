@@ -1,21 +1,12 @@
 {
-  "presets": ["latest", "react"],
-  "plugins": [
-    ["import", [{ "libraryName": "antd", "style": "css" }]],
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    ["transform-runtime", {
-      "helpers": false,
-      "polyfill": false,
-      "regenerator": true
-    }]
+  "presets": [
+    ["babel-preset-env", { "useBuiltIns": false, "modules": "commonjs" }],
+    "babel-preset-react"
   ],
-  "env": {
-    "development": {
-      "plugins": ["react-hot-loader/babel", "transform-react-jsx-source", "transform-react-jsx-self"]
-    },
-    "production": {
-      "plugins": ["transform-react-remove-prop-types"]
-    }
-  }
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    ["babel-plugin-transform-object-rest-spread", { "useBuiltIns": true }],
+    ["babel-plugin-transform-react-jsx", { "useBuiltIns": true }],
+    "babel-plugin-transform-export-extensions"
+  ]
 }

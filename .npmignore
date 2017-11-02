@@ -1,5 +1,13 @@
-example/
 config/
+coverage/
+docs/
+src/
+test/
 .babelrc
+.babelrc.js
 .eslintrc.js
+.gitignore
 .travis.yml
+CODE_OF_CONDUCT.md
+yarn-error.log
+yarn.lock

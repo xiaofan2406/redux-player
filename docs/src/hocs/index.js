@@ -1,0 +1,1 @@
+export asyncLoad from './asyncLoad';
